@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="content">
+	<name>Cookie Accept 2</name>
+	<author>Le Cinquième Crayon</author>
+	<creationDate>Avril 2016</creationDate>
+	<copyright>Copyright (C) Le Cinquieme Crayon. All rights reserved.</copyright>
+	<license>GNU General Public License version 3 or later</license>
+	<authorEmail>contact@cinquiemecrayon.eu</authorEmail>
+	<authorUrl>www.cinquiemecrayon.eu</authorUrl>
+	<version>1.0.0</version>
+	<description>PLG_CONTENT_COOKIEACCEPT2_DESCRIPTION</description>
+	<files>
+		<filename plugin="cookieaccept2">cookieaccept2.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB.plg_content_cookieaccept2.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+ 
+			<fieldset name="basic">
+				<field
+					name="position"
+					type="list"
+					default="bottom"
+					label="PLG_CONTENT_COOKIEACCEPT2_POSITION"
+					description="PLG_CONTENT_COOKIEACCEPT2_POSITION_DESC"
+				>
+					<option value="top">PLG_CONTENT_COOKIEACCEPT2_POSITION_TOP</option>
+					<option value="bottom">PLG_CONTENT_COOKIEACCEPT2_POSITION_BOTTOM</option>
+				</field>
+			</fieldset>
+ 
+		</fields>
+	</config>
+</extension>
+
