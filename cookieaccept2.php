@@ -9,27 +9,56 @@ class plgSystemCookieaccept2 extends JPlugin
 	private $doc;
 	private $cookieaccept2HTML = '';
 	private $getCookieaccept2 = false;
-	
+	private $lang;
+	private $texts;
 
 	public function __construct(&$subject, $params ) {
 		$this->app = &JFactory::getApplication();
 		$this->doc = &JFactory::getDocument();
 		$this->getValCookieaccept2 = $this->app->input->get('cookieaccept2',false,'INT');
+		$this->lang = JFactory::getLanguage()->getTag();
+		
+		// Get texts from db
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+				->select($db->quoteName(array('message','accept_btn_label','more_btn_label','more_btn_article')))
+				->from($db->quoteName('#__cookieaccept2'))
+				->where('lang = ' . $db->Quote($this->lang));
+		$db->setQuery($query);
+		$result = $db->loadObjectList();
+		if(count($result) != 0){
+			$this->texts = $result[0];
+		} else {
+			$query = $db->getQuery(true)
+					->select($db->quoteName(array('message','accept_btn_label','more_btn_label','more_btn_article')))
+					->from($db->quoteName('#__cookieaccept2'))
+					->where('lang = ' . $db->Quote('en-GB'));
+			$db->setQuery($query);
+			$this->texts = $db->loadObjectList()[0];
+		};
+
 		parent::__construct( $subject, $params );
 	}
-	
 	
 	public function setCookieaccept2HTML($deleteCookieBtn) {
 		if($deleteCookieBtn) {
 			// Generate remove cookie btn. 
-			$html = '<a class="cookieaccept2__removeBtn" href="'.JURI::current().'?cookieaccept2=1">Usuń</a>';
+			$html = '<a class="cookieaccept2__removeBtn" href="'.JURI::current().'?cookieaccept2=1">Remove Cookie</a>';
 		}
 		else {
 			// Generate accept cookie btn.
+			$moreBtn = '';
+			if($this->params->get('more_btn')){
+				$url = rtrim(JUri::base(), '/') . JRoute::_(ContentHelperRoute::getArticleRoute( $this->texts->more_btn_article ));
+				$moreBtn = '<a class="cookieaccept2__moreBtn" href="'.$url.'">'.$this->texts->more_btn_label.'</a>';
+			}
 			$html = '
 			<div class="cookieaccept2">
-				<div class="cookieaccept2__message">Message</div>
-				<a class="cookieaccept2__acceptBtn" href="'.JURI::current().'?cookieaccept2=2">Ok</a>
+				<div class="cookieaccept2__message">'.
+					$this->texts->message.
+					$moreBtn.
+				'<a class="cookieaccept2__acceptBtn" href="'.JURI::current().'?cookieaccept2=2">'.$this->texts->accept_btn_label.'</a>
+				</div>
 			</div>
 			';	
 		}
@@ -50,16 +79,26 @@ class plgSystemCookieaccept2 extends JPlugin
 	
 	public function addJS(){
 		$js = file_get_contents(dirname(__FILE__)."/cookieaccept2.js");
-		$this->doc->addScriptDeclaration($js.'
-			if (!window.jQuery) {  
-				jQuery(document).ready(function(){cookieAccept2("'.JURI::current().'",true);}) 
+		$jsDevelop;
+		$isDevelop = $this->params->get('develop');
+		if($isDevelop)
+			$jsDevelop = file_get_contents(dirname(__FILE__)."/cookieaccept2.dev.js");
+			
+		$this->doc->addScriptDeclaration($jsDevelop.$js.'
+			if (window.jQuery) {  
+				jQuery(document).ready(function(){cookieAccept2("'.JURI::current().'",true,'.$isDevelop.');}) 
 			} else {
 				document.addEventListener("DOMContentLoaded", function(){cookieAccept2("'.JURI::current().'",false)});
 			}
 		');
 	}
+	public function addCSS(){
+		$css = file_get_contents(dirname(__FILE__)."/cookieaccept2.css");
+		$this->doc->addStyleDeclaration($css);
+	}
+	
 	function onBeforeCompileHead() {
-		
+		$this->addCSS();	
 		$this->addJS();
 	}
 	

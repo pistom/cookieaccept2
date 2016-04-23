@@ -12,10 +12,26 @@
 	<files>
 		<filename plugin="cookieaccept2">cookieaccept2.php</filename>
 		<filename>index.html</filename>
+		<filename>cookieaccept2.js</filename>
+		<filename>install.mysql.sql</filename>
+		<filename>uninstall.mysql.sql</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB.plg_SYSTEM_cookieaccept2.ini</language>
 	</languages>
+	
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">install.mysql.sql</file>
+		</sql>
+	</install>
+	
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">uninstall.mysql.sql</file>
+		</sql>
+	</uninstall>
+	
 	<config>
 		<fields name="params">
  
@@ -34,20 +50,20 @@
 				<field
                     name="develop"
                     type="radio"
-                    default="1"
+                    default="0"
                     label="Developer mode"
-                    description="Shows delete cookie button"
+                    description="Shows remove cookie button"
                 >
                     <option value="0">Off</option>
                     <option value="1">On</option>
                 </field>
 				
 				<field
-                    name="more_link"
+                    name="more_btn"
                     type="radio"
-                    default="1"
-                    label="More link"
-                    description="More link"
+                    default="0"
+                    label="Learn more button"
+                    description="Learn more button"
                 >
                     <option value="0">Off</option>
                     <option value="1">On</option>
@@ -57,10 +73,13 @@
 					<field name="article_id" type="modal_article" default="" label="Select an article" description="" />
 				</fieldset>
 				
+				<fieldset name="basic" addfieldpath="/plugins/system/cookieaccept2/models/fields">
+					<field name="title" type="Textes" label="anythging" description=""   />
+				</fieldset>
+			
+				
 			</fieldset>
-			
-			
- 
+	
 		</fields>
 	</config>
 </extension>
