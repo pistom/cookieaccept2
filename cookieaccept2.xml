@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.1" type="plugin" group="content">
+<extension version="3.1" type="plugin" group="system">
 	<name>Cookie Accept 2</name>
 	<author>Le Cinquième Crayon</author>
 	<creationDate>Avril 2016</creationDate>
@@ -8,13 +8,13 @@
 	<authorEmail>contact@cinquiemecrayon.eu</authorEmail>
 	<authorUrl>www.cinquiemecrayon.eu</authorUrl>
 	<version>1.0.0</version>
-	<description>PLG_CONTENT_COOKIEACCEPT2_DESCRIPTION</description>
+	<description>PLG_SYSTEM_COOKIEACCEPT2_DESCRIPTION</description>
 	<files>
 		<filename plugin="cookieaccept2">cookieaccept2.php</filename>
 		<filename>index.html</filename>
 	</files>
 	<languages>
-		<language tag="en-GB">language/en-GB.plg_content_cookieaccept2.ini</language>
+		<language tag="en-GB">language/en-GB.plg_SYSTEM_cookieaccept2.ini</language>
 	</languages>
 	<config>
 		<fields name="params">
@@ -24,13 +24,42 @@
 					name="position"
 					type="list"
 					default="bottom"
-					label="PLG_CONTENT_COOKIEACCEPT2_POSITION"
-					description="PLG_CONTENT_COOKIEACCEPT2_POSITION_DESC"
+					label="PLG_SYSTEM_COOKIEACCEPT2_POSITION"
+					description="PLG_SYSTEM_COOKIEACCEPT2_POSITION_DESC"
 				>
-					<option value="top">PLG_CONTENT_COOKIEACCEPT2_POSITION_TOP</option>
-					<option value="bottom">PLG_CONTENT_COOKIEACCEPT2_POSITION_BOTTOM</option>
+					<option value="top">PLG_SYSTEM_COOKIEACCEPT2_POSITION_TOP</option>
+					<option value="bottom">PLG_SYSTEM_COOKIEACCEPT2_POSITION_BOTTOM</option>
 				</field>
+				
+				<field
+                    name="develop"
+                    type="radio"
+                    default="1"
+                    label="Developer mode"
+                    description="Shows delete cookie button"
+                >
+                    <option value="0">Off</option>
+                    <option value="1">On</option>
+                </field>
+				
+				<field
+                    name="more_link"
+                    type="radio"
+                    default="1"
+                    label="More link"
+                    description="More link"
+                >
+                    <option value="0">Off</option>
+                    <option value="1">On</option>
+                </field>
+				
+				<fieldset name="basic" addfieldpath="/administrator/components/com_content/models/fields">
+					<field name="article_id" type="modal_article" default="" label="Select an article" description="" />
+				</fieldset>
+				
 			</fieldset>
+			
+			
  
 		</fields>
 	</config>
