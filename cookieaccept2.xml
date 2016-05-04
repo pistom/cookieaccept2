@@ -69,9 +69,6 @@
                     <option value="1">On</option>
                 </field>
 				
-				<fieldset name="basic" addfieldpath="/administrator/components/com_content/models/fields">
-					<field name="article_id" type="modal_article" default="" label="Select an article" description="" />
-				</fieldset>
 				
 				<fieldset name="basic" addfieldpath="/plugins/system/cookieaccept2/models/fields">
 					<field name="title" type="Textes" label="anythging" description=""   />
